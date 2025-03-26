@@ -32,6 +32,7 @@ THIRD_PARTY_APPS = [
     # 'mptt',
     # 'nested_admin',
     # 'rest_framework'
+    # 'corsheaders'
 ]
 
 INSTALLED_APPS = [
@@ -49,6 +50,7 @@ INSTALLED_APPS += THIRD_PARTY_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -190,6 +192,8 @@ STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY", default="whsec_***")
 SERVER_DOMAIN = env("SERVER_DOMAIN", default="http://127.0.0.1:8000")
 # eg. react,svelte...etc
 FRONTEND_DOMAIN = env("FRONTEND_DOMAIN", default="http://127.0.0.1:8000")
+
+CORS_ALLOWED_ORIGINS = [SERVER_DOMAIN, FRONTEND_DOMAIN]
 
 if not DEBUG:
     CACHES = {
