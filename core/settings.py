@@ -31,7 +31,7 @@ THIRD_PARTY_APPS = [
     # 'django_ckeditor_5',
     # 'mptt',
     # 'nested_admin',
-    # 'restframework'
+    # 'rest_framework'
 ]
 
 INSTALLED_APPS = [
