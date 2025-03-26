@@ -155,6 +155,33 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+# REST Framework Settings
+REST_FRAMEWORK = {
+    # Authentication Settings
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
+    ],
+
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',  # Rate limiting for anonymous users
+        'rest_framework.throttling.UserRateThrottle',  # Rate limiting for authenticated users
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',  # Limit anonymous users to 100 requests per day
+        'user': '1000/day',  # Limit authenticated users to 1000 requests per day
+    },
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 25,
+
+}
+
 # Stripe
 STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="sk_***")
 STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="pk_***")
@@ -187,12 +214,12 @@ EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_password", default="")
 
 # Uncomment if Using RabbitMQ
-RABBITMQ_HOST = env("RABBITMQ_HOST")
-RABBITMQ_PORT = env("RABBITMQ_PORT")
-RABBITMQ_USER = env("RABBITMQ_USER")
-RABBITMQ_PASSWORD = env("RABBITMQ_PASSWORD")
-RABBITMQ_QUEUE_NAME = env("RABBITMQ_QUEUE_NAME")
-RABBITMQ_VHOST = env("RABBITMQ_VHOST")
+RABBITMQ_HOST = env("RABBITMQ_HOST", default="")
+RABBITMQ_PORT = env("RABBITMQ_PORT", default="")
+RABBITMQ_USER = env("RABBITMQ_USER", default="")
+RABBITMQ_PASSWORD = env("RABBITMQ_PASSWORD", default="")
+RABBITMQ_QUEUE_NAME = env("RABBITMQ_QUEUE_NAME", default="")
+RABBITMQ_VHOST = env("RABBITMQ_VHOST", default="")
 
 CKEDITOR_5_CONFIGS = BASE_CKEDITOR_5_CONFIGS
 
@@ -242,6 +269,5 @@ if not DEBUG:
             'formatter': 'simple',
         },
     }
-
 
 STATIC_VERSION = "1"
