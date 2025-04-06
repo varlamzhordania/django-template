@@ -201,9 +201,12 @@ CORS_ALLOWED_ORIGINS = [SERVER_DOMAIN, FRONTEND_DOMAIN]
 if not DEBUG:
     CACHES = {
         'default': {
+            # 'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            # 'LOCATION': env('MEMCACHE_HOST', default='127.0.0.1:11211'),
             'LOCATION': env("REDIS_HOST"),  # Use the REDIS_HOST environment variable
         }
+
     }
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 else:
@@ -227,6 +230,20 @@ RABBITMQ_USER = env("RABBITMQ_USER", default="")
 RABBITMQ_PASSWORD = env("RABBITMQ_PASSWORD", default="")
 RABBITMQ_QUEUE_NAME = env("RABBITMQ_QUEUE_NAME", default="")
 RABBITMQ_VHOST = env("RABBITMQ_VHOST", default="")
+
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TASK_TIME_LIMIT = 300  # Task time limit in seconds
+CELERY_TASK_RETRY = True
+CELERY_TASK_DEFAULT_RETRY_DELAY = 60
+CELERY_TASK_MAX_RETRIES = 3
+CELERY_TIMEZONE = 'UTC'
+CELERY_BEAT_SCHEDULE = {
+    # Example: 'task_name': {'task': 'task_path', 'schedule': 'interval_or_cron'}
+}
 
 CKEDITOR_5_CONFIGS = BASE_CKEDITOR_5_CONFIGS
 
