@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 
 development_env_path = BASE_DIR / "development.env"
-docker_env_path = BASE_DIR / "docker.env"
+docker_env_path = BASE_DIR.parent / "docker.env"
 
 env_file_path = development_env_path if development_env_path.exists() else docker_env_path
 
