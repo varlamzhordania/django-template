@@ -16,9 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+# from django.conf.urls.i18n import i18n_patterns # Wrap whole urls patterns to add translation to all urls
+
+from .views import set_language
 
 urlpatterns = [
     path('', include('account.urls', namespace='account')),
     path('admin/', admin.site.urls),
 
 ]
+
+urlpatterns += [
+    path("setlang/", set_language, name="set_language"),
+    # path('api-auth/', include('rest_framework.urls')),
+    # re_path(r'^rosetta/', include('rosetta.urls')),
+    # path('hijack/', include('hijack.urls')),
+    # path("ckeditor5/", include('django_ckeditor_5.urls')),
+]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,8 +1,10 @@
 import uuid
 import environ
 
-from core.ckeditor import BASE_CKEDITOR_5_CONFIGS
+from django.utils.translation import gettext_lazy as _
 from pathlib import Path
+
+from core.ckeditor import BASE_CKEDITOR_5_CONFIGS
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -36,6 +38,13 @@ THIRD_PARTY_APPS = [
     # 'nested_admin',
     # 'rest_framework'
     # 'corsheaders'
+    # "phonenumber_field",
+    # 'hijack',
+    # 'hijack.contrib.admin',
+
+    # 'rosetta', # translate panel
+    # 'parler',  # translate models content
+    # 'import_export', # import and export via django panel
 ]
 
 INSTALLED_APPS = [
@@ -135,7 +144,33 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('fr', _('French')),
+    ('es', _('Spanish')),
+    ('ar', _('Arabic')),
+)
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en', },  # English
+        {'code': 'fr', },  # French
+        {'code': 'es', },  # Spanish
+        {'code': 'ar', },  # Arabic
+    ),
+    'default': {
+        'fallback': 'en',  # defaults to PARLER_DEFAULT_LANGUAGE_CODE
+        'hide_untranslated': False,  # the default; let .active_translations() return fallbacks too.
+    }
+}
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale/',
+]
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -246,6 +281,7 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 CKEDITOR_5_CONFIGS = BASE_CKEDITOR_5_CONFIGS
+PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"
 
 LOGGING = {
     'version': 1,
