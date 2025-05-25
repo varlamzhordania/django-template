@@ -48,6 +48,8 @@ THIRD_PARTY_APPS = [
 ]
 
 INSTALLED_APPS = [
+    # "channels"
+    # "daphne"
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -220,6 +222,21 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25,
 
+}
+
+
+
+# Channels Settings
+CHANNEL_LAYERS = {
+    'default': {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+        # 'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        # 'CONFIG': {
+        #     "hosts": [env('REDIS_HOST', default='redis://localhost:6379')],
+        #     "capacity": 1000,  # 🔹 Increase buffer size to allow more messages
+        #     "expiry": 10,  # 🔹 Reduce expiry to clear old messages faster
+        # },
+    },
 }
 
 # Stripe
